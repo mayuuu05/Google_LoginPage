@@ -81,11 +81,29 @@ class _LoginPage2State extends State<LoginPage2> {
                             height: 50,
                             width: 390,
                             child: TextFormField(
+                              validator: (value) {
+                                if(value!.isEmpty)
+                                {
+                                  return "password must be required";
+                                }
+                                if(value!.length<=8)
+                                {
+                                  return 'Password must be 8 characters';
+                                }
+
+                              },
                               obscureText:  true,
                               textInputAction: TextInputAction.next,
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide(
+                                        color: Colors.red,
+                                        width: 1
+                                    ),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5),
@@ -179,6 +197,22 @@ class _LoginPage2State extends State<LoginPage2> {
                                     {
                                       pass = txtPassword.text;
                                       Navigator.of(context).pushNamed('/page4');
+                                    }
+                                    if(Forkey.currentState!.validate())
+                                    {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          // behavior: SnackBarBehavior.floating,
+                                          content: const Text(
+                                            'Password Created Successfuly!',
+                                            style: TextStyle(
+                                                color: Colors.white
+                                            ),
+                                          ),
+                                          backgroundColor: Colors.green,
+                                          duration: Duration(seconds: 4),
+                                        ),
+                                      );
                                     }
                                   });
 
